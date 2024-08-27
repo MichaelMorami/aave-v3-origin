@@ -30,7 +30,7 @@ methods {
         
     // static aToken harness
     // ---------------------
-        //        function getStaticATokenUnderlying() external returns (address) envfree;
+        function getStaticATokenUnderlying() external returns (address) envfree;
         //function getRewardsIndexOnLastInteraction(address, address) external returns (uint128) envfree;
         //function getRewardTokensLength() external returns (uint256) envfree;
         //function getRewardToken(uint256) external returns (address) envfree;
@@ -94,19 +94,19 @@ methods {
         function _.UNDERLYING_ASSET_ADDRESS() external => CONSTANT UNRESOLVED;
 
         function RAY() external returns (uint256) envfree;
-        function get_the_storage() external returns (ERC4626Upgradeable.ERC4626Storage storage) envfree;
-        function ERC4626Upgradeable._getERC4626Storage() internal returns (ERC4626Upgradeable.ERC4626Storage storage) =>
-          get_the_storage();
+        //        function get_the_storage() external returns (ERC4626Upgradeable.ERC4626Storage storage) envfree;
+        //function ERC4626Upgradeable._getERC4626Storage() internal returns (ERC4626Upgradeable.ERC4626Storage storage) =>
+        //  get_the_storage();
 }
 
-function _getERC4626StorageCVL() returns ERC4626Upgradeable.ERC4626Storage {
-  return get_the_storage();
-}
+//function _getERC4626StorageCVL() returns ERC4626Upgradeable.ERC4626Storage {
+//  return get_the_storage();
+//}
 
 
-function getStaticATokenUnderlying() returns address {
-  return _ERC4626_storage._asset; 
-}
+//function getStaticATokenUnderlying() returns address {
+//  return _ERC4626_storage._asset; 
+//}
 
 
 ///////////////// DEFINITIONS //////////////////////

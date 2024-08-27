@@ -11,13 +11,6 @@ contract StataTokenV2Harness is StataTokenV2 {
   address internal _reward_A;
   address internal _reward_B;
 
-  ERC4626Storage the_storage;
-
-  function get_the_storage() public view returns (ERC4626Storage storage ret) {
-    ret = the_storage;
-  }
-
-
   constructor(
               IPool pool,
               IRewardsController rewardsController
@@ -27,13 +20,13 @@ contract StataTokenV2Harness is StataTokenV2 {
     return _rate();
   }
 
-  /*
+  
     // returns the address of the underlying asset of the static aToken
     function getStaticATokenUnderlying() public view returns (address) {
-      //return _aTokenUnderlying;
-      return asset();
+      return address(_asset);
+      //      return asset();
     }
-
+    /*
     // returns the address of the i-th reward token in the reward tokens list maintained by the static aToken
     function getRewardToken(uint256 i) external view returns (address) {
         return _rewardTokens[i];
