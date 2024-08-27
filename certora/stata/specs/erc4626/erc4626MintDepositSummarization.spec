@@ -24,7 +24,7 @@ methods{
 
 ///////////////// DEFINITIONS //////////////////////
 
-    definition RAY() returns uint256 = 10^27;
+//    definition RAY() returns uint256 = 10^27;
 
 ///////////////// Properties ///////////////////////
 

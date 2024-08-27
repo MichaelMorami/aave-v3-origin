@@ -129,17 +129,17 @@ methods {
             !harnessOnlyMethods(f) &&
             f.selector != sig:initialize(address, string, string).selector) &&
         // Exclude meta functions
-        (f.selector != sig:metaDeposit(
-                                       address,address,uint256,uint16,bool,uint256,
-                                       IStaticATokenLM.PermitParams calldata,IStaticATokenLM.SignatureParams calldata).selector) &&
-        (f.selector != sig:metaWithdraw(
-                                        address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata
-        ).selector) &&
+        //        (f.selector != sig:metaDeposit(
+        //                             address,address,uint256,uint16,bool,uint256,
+        //                             IStaticATokenLM.PermitParams calldata,IStaticATokenLM.SignatureParams calldata).selector) &&
+        //(f.selector != sig:metaWithdraw(
+        //                              address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata
+        //        ).selector) &&
         // Exclude methods that time out
         (f.selector != sig:deposit(uint256,address).selector) &&
-        (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
+        //        (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
         (f.selector != sig:redeem(uint256,address,address).selector) &&
-        (f.selector != sig:redeem(uint256,address,address,bool).selector) &&
+        //(f.selector != sig:redeem(uint256,address,address,bool).selector) &&
             (f.selector != sig:mint(uint256,address).selector)
         } {
         // Assuming single reward
@@ -169,7 +169,7 @@ methods {
     rule rewardsTotalDeclinesOnlyByClaim_timedout_methods(method f) filtered {
         // Include only the timed out methods, excluding redeem
         f -> (f.selector == sig:deposit(uint256,address).selector) ||
-            (f.selector == sig:deposit(uint256,address,uint16,bool).selector) ||
+          //            (f.selector == sig:deposit(uint256,address,uint16,bool).selector) ||
             (f.selector == sig:mint(uint256,address).selector)
     } {
         // Assuming single reward
@@ -201,8 +201,8 @@ methods {
 	 */
     rule rewardsTotalDeclinesOnlyByClaim_redeem_methods(method f) filtered {
         // Include only the redeem timed out methods
-        f -> (f.selector == sig:redeem(uint256,address,address).selector) ||
-            (f.selector == sig:redeem(uint256,address,address,bool).selector)
+        f -> (f.selector == sig:redeem(uint256,address,address).selector)
+          //          ||  (f.selector == sig:redeem(uint256,address,address,bool).selector)
     } {
         // Assuming single reward
         single_RewardToken_setup();
@@ -248,18 +248,18 @@ methods {
 invariant solvency_positive_total_supply_only_if_positive_asset()
   ((_AToken.scaledBalanceOf(currentContract) == 0) => (totalSupply() == 0))
   filtered { f ->
-    f.contract == currentContract &&
-    f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams).selector 
+    f.contract == currentContract 
+    //  &&  f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams).selector 
     && !harnessMethodsMinusHarnessClaimMethods(f) 
     && !claimFunctions(f)
     && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector
     }
         {
-          preserved redeem(uint256 shares, address receiver, address owner, bool toUnderlying) with (env e1) {
-            requireInvariant solvency_total_asset_geq_total_supply();
-            require balanceOf(owner) <= totalSupply(); //todo: replace with requireInvariant
-          }
-          preserved redeem(uint256 shares, address receiver, address owner) with (env e2) {
+          //          preserved redeem(uint256 shares, address receiver, address owner, bool toUnderlying) with (env e1) {
+          //  requireInvariant solvency_total_asset_geq_total_supply();
+          //  require balanceOf(owner) <= totalSupply(); //todo: replace with requireInvariant
+          // }
+          preserved redeemATokens(uint256 shares, address receiver, address owner) with (env e2) {
             requireInvariant solvency_total_asset_geq_total_supply();
             require balanceOf(owner) <= totalSupply(); 
           }
@@ -284,10 +284,10 @@ invariant solvency_positive_total_supply_only_if_positive_asset()
 invariant solvency_total_asset_geq_total_supply()
   (_AToken.scaledBalanceOf(currentContract) >= totalSupply())
   filtered { f ->
-    f.contract == currentContract &&
-    f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
+    f.contract == currentContract 
+    // &&   f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
     && f.selector != sig:redeem(uint256,address,address).selector
-    && f.selector != sig:redeem(uint256,address,address,bool).selector
+    //    && f.selector != sig:redeem(uint256,address,address,bool).selector
     && !harnessMethodsMinusHarnessClaimMethods(f)
     && !claimFunctions(f)
     && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector }
@@ -299,10 +299,10 @@ invariant solvency_total_asset_geq_total_supply()
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
             require e4.msg.sender != currentContract; //todo: review
           }
-          preserved deposit(uint256 assets, address receiver,uint16 referralCode, bool fromUnderlying) with (env e5) {
+          /*          preserved deposit(uint256 assets, address receiver,uint16 referralCode, bool fromUnderlying) with (env e5) {
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
             require e5.msg.sender != currentContract; //todo: review
-          }
+            }*/
           preserved mint(uint256 shares, address receiver) with (env e6) {
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
             require e6.msg.sender != currentContract; //todo: review
@@ -433,12 +433,12 @@ invariant singleAssetAccruedRewards(env e0, address _asset, address reward, addr
     filtered { f -> !f.isView && !claimFunctions(f)
                         && !collectAndUpdateFunction(f)
                         && f.selector != sig:initialize(address,string,string).selector 
-                        && f.selector != sig:redeem(uint256,address,address,bool).selector 
+        //                        && f.selector != sig:redeem(uint256,address,address,bool).selector 
                         && f.selector != sig:redeem(uint256,address,address).selector 
                         && f.selector != sig:withdraw(uint256,address,address).selector 
                         && f.selector != sig:deposit(uint256,address).selector 
                         && f.selector != sig:mint(uint256,address).selector 
-                        && f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
+        //        && f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
                         && f.selector != sig:claimSingleRewardOnBehalf(address,address,address).selector 
                         }
     {
@@ -741,11 +741,11 @@ rule getClaimableRewards_stable(method f)
     && !claimFunctions(f)
     && !collectAndUpdateFunction(f)
     && f.selector != sig:initialize(address,string,string).selector
-    && f.selector != sig:deposit(uint256,address,uint16,bool).selector
+    //    && f.selector != sig:deposit(uint256,address,uint16,bool).selector
     && f.selector != sig:redeem(uint256,address,address).selector
-    && f.selector != sig:redeem(uint256,address,address,bool).selector
+    //    && f.selector != sig:redeem(uint256,address,address,bool).selector
     && f.selector != sig:mint(uint256,address).selector
-    && f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
+    //    && f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
     && !harnessOnlyMethods(f)
     }
     {

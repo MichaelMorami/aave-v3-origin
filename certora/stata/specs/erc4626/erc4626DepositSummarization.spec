@@ -6,7 +6,7 @@ methods{
     // static aToken
     // -------------
     function previewDeposit(uint256) external returns(uint256) envfree => NONDET;
-    function ERC20._mint(address, uint256) internal => NONDET;
+    function ERC20Upgradeable._mint(address, uint256) internal => NONDET;
 
     // rewards controller
     // ------------------

@@ -7,7 +7,6 @@ using TransferStrategyHarness as _TransferStrategy;
 using DummyERC20_aTokenUnderlying as _DummyERC20_aTokenUnderlying;
 using ATokenInstance as _AToken;
 using DummyERC20_rewardToken as _DummyERC20_rewardToken;
-using ERC4626Storage_Harness as _ERC4626_storage;
 
 /////////////////// Methods ////////////////////////
 
@@ -31,9 +30,9 @@ methods {
     // static aToken harness
     // ---------------------
         function getStaticATokenUnderlying() external returns (address) envfree;
-        //function getRewardsIndexOnLastInteraction(address, address) external returns (uint128) envfree;
-        //function getRewardTokensLength() external returns (uint256) envfree;
-        //function getRewardToken(uint256) external returns (address) envfree;
+        function getRewardsIndexOnLastInteraction(address, address) external returns (uint128) envfree;
+        function getRewardTokensLength() external returns (uint256) envfree;
+        function getRewardToken(uint256) external returns (address) envfree;
 
     // erc20
     // -----
@@ -94,20 +93,7 @@ methods {
         function _.UNDERLYING_ASSET_ADDRESS() external => CONSTANT UNRESOLVED;
 
         function RAY() external returns (uint256) envfree;
-        //        function get_the_storage() external returns (ERC4626Upgradeable.ERC4626Storage storage) envfree;
-        //function ERC4626Upgradeable._getERC4626Storage() internal returns (ERC4626Upgradeable.ERC4626Storage storage) =>
-        //  get_the_storage();
 }
-
-//function _getERC4626StorageCVL() returns ERC4626Upgradeable.ERC4626Storage {
-//  return get_the_storage();
-//}
-
-
-//function getStaticATokenUnderlying() returns address {
-//  return _ERC4626_storage._asset; 
-//}
-
 
 ///////////////// DEFINITIONS //////////////////////
 
@@ -122,18 +108,18 @@ methods {
     definition collectAndUpdateFunction(method f) returns bool =
         f.selector == sig:collectAndUpdateRewards(address).selector;
 
-/*    definition harnessOnlyMethods(method f) returns bool =
+    definition harnessOnlyMethods(method f) returns bool =
         (harnessMethodsMinusHarnessClaimMethods(f) ||
         f.selector == sig:claimSingleRewardOnBehalf(address, address, address).selector ||
-        f.selector == sig:claimDoubleRewardOnBehalfSame(address, address, address).selector);*/
+        f.selector == sig:claimDoubleRewardOnBehalfSame(address, address, address).selector);
         
-/*    definition harnessMethodsMinusHarnessClaimMethods(method f) returns bool =
+    definition harnessMethodsMinusHarnessClaimMethods(method f) returns bool =
         (f.selector == sig:getStaticATokenUnderlying().selector ||
         f.selector == sig:getRewardTokensLength().selector ||
         f.selector == sig:getRewardToken(uint256).selector ||
         f.selector == sig:getRewardsIndexOnLastInteraction(address, address).selector ||
         f.selector == sig:getUserRewardsData(address, address).selector ||
-        f.selector == sig:_mintWrapper(address, uint256).selector);*/
+        f.selector == sig:_mintWrapper(address, uint256).selector);
 
 ////////////////// FUNCTIONS //////////////////////
 
@@ -142,10 +128,10 @@ methods {
     * Setup the `StaticATokenLM`'s rewards so they contain a single reward token
     * which is` _DummyERC20_rewardToken`.
     */
-/*    function single_RewardToken_setup() {
+    function single_RewardToken_setup() {
         require getRewardTokensLength() == 1;
         require getRewardToken(0) == _DummyERC20_rewardToken;
-        }*/
+        }
 
     /**
     * @title Single reward setup in RewardsController
@@ -160,7 +146,7 @@ methods {
     /// @title Assumptions that should hold in any run
     /// @dev Assume that RewardsController.configureAssets(RewardsDataTypes.RewardsConfigInput[] memory rewardsInput) was called
     function setup(env e, address user) {
-      /*        require getRewardTokensLength() > 0;*/
+        require getRewardTokensLength() > 0;
         require _RewardsController.getAvailableRewardsCount(_AToken)  > 0;
         require _RewardsController.getRewardsByAsset(_AToken, 0) == _DummyERC20_rewardToken;
         require currentContract != e.msg.sender;

@@ -24,9 +24,8 @@ contract StataTokenV2Harness is StataTokenV2 {
     // returns the address of the underlying asset of the static aToken
     function getStaticATokenUnderlying() public view returns (address) {
       return address(_asset);
-      //      return asset();
     }
-    /*
+    
     // returns the address of the i-th reward token in the reward tokens list maintained by the static aToken
     function getRewardToken(uint256 i) external view returns (address) {
         return _rewardTokens[i];
@@ -84,12 +83,12 @@ contract StataTokenV2Harness is StataTokenV2 {
         _claimRewardsOnBehalf(onBehalfOf, receiver, rewards);
 
     }
-    */
+    
     // wrapper function for the erc20 _mint function. Used to reduce running times
     function _mintWrapper(address to, uint256 amount) external {
         _mint(to, amount);
     }
-    /*
+    
     function getUserRewardsData(address user, address reward)
     external view
     returns (uint128) {
@@ -98,5 +97,5 @@ contract StataTokenV2Harness is StataTokenV2 {
         ];
         return currentUserRewardsData.rewardsIndexOnLastInteraction;
     }
-    */
+    
 }

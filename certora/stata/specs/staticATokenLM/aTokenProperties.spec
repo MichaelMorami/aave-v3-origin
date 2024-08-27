@@ -47,16 +47,16 @@ import "../methods/methods_base.spec";
     */
     rule aTokenBalanceIsFixed(method f) filtered {
         // Exclude balance changing methods
-        f -> (f.selector != sig:deposit(uint256,address).selector) &&
-          (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
+        f -> (f.selector != sig:depositATokens(uint256,address).selector) &&
+          //          (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
           (f.selector != sig:withdraw(uint256,address,address).selector) &&
-          (f.selector != sig:redeem(uint256,address,address).selector) &&
-          (f.selector != sig:redeem(uint256,address,address,bool).selector) &&
+          (f.selector != sig:redeemATokens(uint256,address,address).selector) &&
+          //          (f.selector != sig:redeem(uint256,address,address,bool).selector) &&
           (f.selector != sig:mint(uint256,address).selector) &&
-          (f.selector != sig:metaDeposit(address,address,uint256,uint16,bool,uint256,
-                                         IStaticATokenLM.PermitParams,IStaticATokenLM.SignatureParams).selector) &&
-          (f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,
-                                          IStaticATokenLM.SignatureParams).selector) &&
+          //          (f.selector != sig:metaDeposit(address,address,uint256,uint16,bool,uint256,
+          //                             IStaticATokenLM.PermitParams,IStaticATokenLM.SignatureParams).selector) &&
+          //          (f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,
+          //                              IStaticATokenLM.SignatureParams).selector) &&
           // Exclude reward related methods - these are handled below
           (f.selector != sig:collectAndUpdateRewards(address).selector) &&
           (f.selector != sig:claimRewardsOnBehalf(address,address,address[]).selector) &&
@@ -242,7 +242,10 @@ import "../methods/methods_base.spec";
     //https://vaas-stg.certora.com/output/99352/509a56a1d46348eea0872b3a57c4d15a/?anonymousKey=3e15ac5a5b01e689eb3f71580e3532d8098e71b5
     invariant inv_atoken_balanceOf_leq_totalSupply(address user)
         _AToken.balanceOf(user) <= _AToken.totalSupply()
-        filtered { f -> !f.isView && f.selector != sig:redeem(uint256,address,address,bool).selector && !harnessOnlyMethods(f)}
+        filtered { f ->
+        !f.isView &&
+        //        f.selector != sig:redeemATokens(uint256,address,address,bool).selector &&
+        !harnessOnlyMethods(f)}
         {
             preserved with (env e){
                 requireInvariant sumAllATokenScaledBalance_eq_totalSupply();
@@ -254,7 +257,7 @@ import "../methods/methods_base.spec";
     //pass, times out with rule_sanity basic
     invariant inv_atoken_balanceOf_leq_totalSupply_redeem(address user)
         _AToken.balanceOf(user) <= _AToken.totalSupply()
-        filtered { f -> f.selector == sig:redeem(uint256,address,address,bool).selector}
+    //filtered { f -> f.selector == sig:redeem(uint256,address,address,bool).selector}
         {
             preserved with (env e){
                 requireInvariant sumAllATokenScaledBalance_eq_totalSupply();
