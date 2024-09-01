@@ -23,13 +23,13 @@ methods {
     } 
 
     /// @title Sum of balances of StaticAToken 
-    ghost sumAllBalance() returns mathint {
-        init_state axiom sumAllBalance() == 0;
-    }
+    // ghost sumAllBalance() returns mathint {
+    //     init_state axiom sumAllBalance() == 0;
+    // }
 
-    hook Sstore balanceOf[KEY address a] uint256 balance (uint256 old_balance) {
-    havoc sumAllBalance assuming sumAllBalance@new() == sumAllBalance@old() + balance - old_balance;
-    }
+    // hook Sstore balanceOf[KEY address a] uint256 balance (uint256 old_balance) {
+    // havoc sumAllBalance assuming sumAllBalance@new() == sumAllBalance@old() + balance - old_balance;
+    // }
 
 ///////////////// Properties ///////////////////////
 
@@ -803,9 +803,10 @@ rule getClaimableRewards_stable(method f)
         uint256 shares;
         address receiver;
         address owner;
-        bool toUnderlying;
+        // bool toUnderlying;
         
-        redeem(e, shares, receiver, owner, toUnderlying);
+        // redeem(e, shares, receiver, owner, toUnderlying);
+        redeemATokens(e, shares, receiver, owner);
 
         mathint claimableRewardsAfter = getClaimableRewards(e, user, reward);
         assert claimableRewardsAfter == claimableRewardsBefore;
@@ -821,8 +822,8 @@ rule getClaimableRewards_stable(method f)
         
         uint256 assets;
         address recipient;
-        uint16 referralCode;
-        bool fromUnderlying;
+        // uint16 referralCode;
+        // bool fromUnderlying;
 
         require user != 0;
 
@@ -833,7 +834,8 @@ rule getClaimableRewards_stable(method f)
 
         require _RewardsController.getAvailableRewardsCount(_AToken)  > 0; //todo: review
         require _RewardsController.getRewardsByAsset(_AToken, 0) == reward; //todo: review
-        deposit(e, assets, recipient,referralCode,fromUnderlying);
+        // deposit(e, assets, recipient,referralCode,fromUnderlying);
+        depositATokens(e, assets, recipient); // try depositWithPermit()
         mathint claimableRewardsAfter = getClaimableRewards(e, user, reward);
         assert claimableRewardsAfter == claimableRewardsBefore;
     }

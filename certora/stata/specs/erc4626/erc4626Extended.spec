@@ -221,8 +221,7 @@ import "../methods/methods_base.spec";
 rule maxDepositConstant(method f)
   filtered {
   f ->
-    f.contract == currentContract &&
-    f.selector != sig:metaDeposit(address,address,uint256,uint16,bool,uint256,IStaticATokenLM.PermitParams calldata, IStaticATokenLM.SignatureParams calldata).selector
+    f.contract == currentContract
     }
         {
           env e;
