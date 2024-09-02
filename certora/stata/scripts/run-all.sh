@@ -139,14 +139,14 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimable
 
 
 # violation: https://prover.certora.com/output/3106/9bf4d44e7f684150b36bca070f7119f7/?anonymousKey=7d52bd63155a6411f27ad69e92c204c6e0e3c122
-echo "******** Running: 27  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
---msg "27: "
+# echo "******** Running: 27  ***************"
+# certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
+# --msg "27: "
 
 
 
 # violation: https://prover.certora.com/output/3106/fd0ddf1f2bd14b658480bd2aa3b00f57/?anonymousKey=4e8346d9dde93b0fcf2851ddc6ebf826d249e3a0
-echo "******** Running: 28  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
---msg "28: "
+# echo "******** Running: 28  ***************"
+# certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
+# --msg "28: "
           

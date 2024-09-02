@@ -32,7 +32,7 @@ methods {
             function _.finalizeTransfer(address, address, address, uint256, uint256, uint256) external => NONDET;
 
             // In ScaledBalanceTokenBase.sol called by getAssetIndex
-            function _.scaledTotalSupply() external => NONDET;
+            function _.scaledTotalSupply() external => DISPATCHER(true);
 
         // rewards controller
 	    // ------------------
