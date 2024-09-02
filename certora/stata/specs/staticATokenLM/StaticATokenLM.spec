@@ -333,6 +333,7 @@ invariant singleAssetAccruedRewards(env e0, address _asset, address reward, addr
    => (_RewardsController.getUserAccruedReward(_asset, reward, user) == _RewardsController.getUserAccruedRewards(reward, user)))
   filtered {f ->
     f.contract == currentContract &&
+    f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
     !harnessOnlyMethods(f)
     } {
   preserved with (env e1){

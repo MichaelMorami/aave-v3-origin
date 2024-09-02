@@ -26,6 +26,7 @@ methods {
         function getUnclaimedRewards(address, address) external returns (uint256) envfree;
         function rewardTokens() external returns (address[]) envfree;
         function isRegisteredRewardToken(address) external returns (bool) envfree;
+
         
     // static aToken harness
     // ---------------------

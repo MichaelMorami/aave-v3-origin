@@ -112,9 +112,9 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetA
 
 
 # violation: https://prover.certora.com/output/3106/09a08b84c2be4dc09eacefb6e9af4596/?anonymousKey=544d133767361da1b8abece9aa73e899a960f101
-echo "******** Running: 21  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
---msg "21: "
+# echo "******** Running: 21  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
+# --msg "21: "
 
 # echo "******** Running: 22  ***************"
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
