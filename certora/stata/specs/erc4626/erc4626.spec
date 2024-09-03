@@ -1,9 +1,23 @@
 import "../methods/methods_base.spec";
+import "../methods/CVLMath.spec";
 
 methods {
     function balanceOf(address) external returns (uint256) envfree;
     function totalSupply() external returns (uint256) envfree;
+
+    function _.mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) internal => mulDivCVL(x, y, denominator, rounding) expect (uint256);
 }
+
+
+function mulDivCVL(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) returns uint256 {
+    if (rounding == Math.Rounding.Floor) {
+        return mulDivDownAbstractPlus(x, y, denominator);
+    } else {
+        return mulDivUpAbstractPlus(x, y, denominator);
+    }
+}
+
+
 ///////////////// Properties ///////////////////////
     /****************************
     *       previewDeposit      *
@@ -559,11 +573,10 @@ methods {
             uint256 assets2;
             storage before  = lastStorage;
             
-            
             mathint shares1 = convertToShares(e1, assets1) at before;
             mathint shares2 = convertToShares(e2, assets1) at before;
             mathint shares3 = convertToShares(e2, assets2) at before;
-            mathint combinedShares = convertToShares(e3, assert_uint256(assets1 + assets2)) at before;
+            mathint combinedShares = convertToShares(e3, require_uint256(assets1 + assets2)) at before;
 
             assert shares1 == shares2,"conversion to shares should be independent of env variables including msg.sender";
             assert shares1 + shares3 <= combinedShares,"conversion should round down and not up";

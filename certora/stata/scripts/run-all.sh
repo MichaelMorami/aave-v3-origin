@@ -3,6 +3,8 @@
 
 
 # timeouts and violations: https://prover.certora.com/output/3106/543ea4b224894f79abcb1f899839b1ff/?anonymousKey=42e99c1235c555931477fd8cac61a9c03991cd61
+# amountConversionRoundedDown: isn't counter-example with shares == 0 proves comments for the second assert?
+# convertToSharesCheck: why do we use assert_uint256 in combined shares if it accepts only uint256? 
 echo "******** Running: 1  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawIndependentOfMaxWithdraw previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
 #  maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert
@@ -19,6 +21,8 @@ certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndepend
 
 
 # timeouts and violations: https://prover.certora.com/output/3106/614815483fe64754b0842ca246ed65e7/?anonymousKey=00f1dc259f71a65a83b997ce929093b4049e34b0
+# amountConversionPreserved: 
+# convertSumOfAssetsPreserved: need help to understand counter-example. Looks strange
 echo "******** Running: 4  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
            # maxDepositConstant \
@@ -41,7 +45,7 @@ certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule redeemSum \
 
 
 
-# violation: https://prover.certora.com/output/3106/0f2d21cb1d734674bc76599941a51a0a/?anonymousKey=b9d8f64e0ad295fd3b347ab9634ab66c28c6d8ba
+# 
 echo "******** Running: 8  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
 --msg "8: "
@@ -52,7 +56,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsi
 
 
 
-# violation: https://prover.certora.com/output/3106/c2e95eae8f894b44948269988d6efb95/?anonymousKey=b72526a50bc21e9e2646b6df66f1099ba9b79370
+# 
 echo "******** Running: 10  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "10: "
