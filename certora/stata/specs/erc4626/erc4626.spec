@@ -1,20 +1,8 @@
 import "../methods/methods_base.spec";
-import "../methods/CVLMath.spec";
 
 methods {
     function balanceOf(address) external returns (uint256) envfree;
     function totalSupply() external returns (uint256) envfree;
-
-    function _.mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) internal => mulDivCVL(x, y, denominator, rounding) expect (uint256);
-}
-
-
-function mulDivCVL(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) returns uint256 {
-    if (rounding == Math.Rounding.Floor) {
-        return mulDivDownAbstractPlus(x, y, denominator);
-    } else {
-        return mulDivUpAbstractPlus(x, y, denominator);
-    }
 }
 
 

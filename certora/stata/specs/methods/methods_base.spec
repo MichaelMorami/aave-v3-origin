@@ -1,4 +1,5 @@
 import "erc20.spec";
+import "CVLMath.spec";
 
 using StataTokenV2Harness as _StaticATokenLM;
 using SymbolicLendingPool as _SymbolicLendingPool;
@@ -94,6 +95,10 @@ methods {
         function _.UNDERLYING_ASSET_ADDRESS() external => CONSTANT UNRESOLVED;
 
         function RAY() external returns (uint256) envfree;
+
+    // math lib
+    // ------------
+        function _.mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) internal => mulDivCVL(x, y, denominator, rounding) expect (uint256);
 }
 
 ///////////////// DEFINITIONS //////////////////////
@@ -161,3 +166,13 @@ methods {
         require _TransferStrategy != user;
         require _TransferStrategy != user;
     }
+
+
+    function mulDivCVL(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) returns uint256 {
+        if (rounding == Math.Rounding.Floor) {
+            return mulDivDownAbstractPlus(x, y, denominator);
+        } else {
+            return mulDivUpAbstractPlus(x, y, denominator);
+        }
+    }
+
