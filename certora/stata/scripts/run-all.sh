@@ -45,10 +45,10 @@ certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule redeemSum \
 
 
 
-# 
-echo "******** Running: 8  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
---msg "8: "
+
+# echo "******** Running: 8  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
+# --msg "8: "
 
 # echo "******** Running: 9  ***************"
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenInsufficientRewards \
@@ -56,7 +56,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsi
 
 
 
-# 
+# violation: https://prover.certora.com/output/3106/b11bcd8411da46349ad18870cbd5a9d5/?anonymousKey=94a0cf77ef474d9232e0dbde125c32eff6e13c36
 echo "******** Running: 10  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "10: "
