@@ -28,8 +28,6 @@ methods {
         function rewardTokens() external returns (address[]) envfree;
         function isRegisteredRewardToken(address) external returns (bool) envfree;
 
-        function _.mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) internal => mulDivCVL(x, y, denominator, rounding) expect (uint256);
-
     // static aToken harness
     // ---------------------
         function getStaticATokenUnderlying() external returns (address) envfree;
