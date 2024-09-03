@@ -38,6 +38,10 @@
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
 # --msg "8: "
 
+# echo "******** Running: 8  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
+# --msg "8: "
+
 # echo "******** Running: 9  ***************"
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenInsufficientRewards \
 # --msg "9: "
@@ -45,9 +49,9 @@
 
 
 # violation: https://prover.certora.com/output/3106/b11bcd8411da46349ad18870cbd5a9d5/?anonymousKey=94a0cf77ef474d9232e0dbde125c32eff6e13c36
-echo "******** Running: 10  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
---msg "10: "
+# echo "******** Running: 10  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
+# --msg "10: "
 
 # echo "******** Running: 11  ***************"
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim_timedout_methods \
@@ -60,9 +64,9 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotal
 
 
 # violation: https://prover.certora.com/output/3106/42796ea4e76f4bf2808749d0eb7b3953/?anonymousKey=077509a170938b82c0ea5f810b2106a66c2fe356
-echo "******** Running: 13  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_positive_total_supply_only_if_positive_asset \
---msg "13: "
+# echo "******** Running: 13  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_positive_total_supply_only_if_positive_asset \
+# --msg "13: "
 
 
 
@@ -74,16 +78,16 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_tot
 
 
 # timeout: https://prover.certora.com/output/3106/ebe21976125f48a381e02bd9d0b8e658/?anonymousKey=15c3dbcc5be0eb4c64f6c4ecc5a291f6d439b9cb
-echo "******** Running: 15  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply_CASE_SPLIT_redeem \
---msg "15: "
+# echo "******** Running: 15  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply_CASE_SPLIT_redeem \
+# --msg "15: "
 
 
 
 # violation: https://prover.certora.com/output/3106/73107dca3c63493c815975d77e13c82a/?anonymousKey=c8c13194e45f411264578502258266e1491a2113
-echo "******** Running: 16  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
---msg "16: "
+# echo "******** Running: 16  ***************"
+# certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
+# --msg "16: "
 
 # echo "******** Running: 17  ***************"
 # certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable \

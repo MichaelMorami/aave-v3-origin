@@ -112,12 +112,9 @@ methods {
     /**
     * @title Only claiming rewards should reduce contract's total rewards balance
     * Only "claim reward" methods should cause the total rewards balance of
-    * `StaticATokenLM` to decline. Note that `initialize`, `metaDeposit`
-    * and `metaWithdraw` are filtered out. To avoid timeouts the rest of the
+    * `StaticATokenLM` to decline. Note that `initialize`, `emergencyEtherTransfer`
+    * and `emergencyTokenTransfer` are filtered out. To avoid timeouts the rest of the
     * methods were split between several versions of this rule.
-    *
-    * WARNING: `metaDeposit` seems to be vacuous, i.e. **always** fails on a
-    * require statement.
     *
     * @dev Passed with rule-sanity in job-id=`98beb842d5b94278ac4a9222249fb564`
     * 
@@ -128,18 +125,13 @@ methods {
             f.contract == currentContract &&
             !harnessOnlyMethods(f) &&
             f.selector != sig:initialize(address, string, string).selector) &&
-        // Exclude meta functions
-        //        (f.selector != sig:metaDeposit(
-        //                             address,address,uint256,uint16,bool,uint256,
-        //                             IStaticATokenLM.PermitParams calldata,IStaticATokenLM.SignatureParams calldata).selector) &&
-        //(f.selector != sig:metaWithdraw(
-        //                              address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata
-        //        ).selector) &&
-        // Exclude methods that time out
-        (f.selector != sig:deposit(uint256,address).selector) &&
-        //        (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
-        (f.selector != sig:redeem(uint256,address,address).selector) &&
-        //(f.selector != sig:redeem(uint256,address,address,bool).selector) &&
+            f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
+            f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector &&
+            // Exclude methods that time out
+            (f.selector != sig:deposit(uint256,address).selector) &&
+            //        (f.selector != sig:deposit(uint256,address,uint16,bool).selector) &&
+            (f.selector != sig:redeem(uint256,address,address).selector) &&
+            //(f.selector != sig:redeem(uint256,address,address,bool).selector) &&
             (f.selector != sig:mint(uint256,address).selector)
         } {
         // Assuming single reward
@@ -253,6 +245,7 @@ invariant solvency_positive_total_supply_only_if_positive_asset()
     && !harnessMethodsMinusHarnessClaimMethods(f) 
     && !claimFunctions(f)
     && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector
+    && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     }
         {
           //          preserved redeem(uint256 shares, address receiver, address owner, bool toUnderlying) with (env e1) {
@@ -287,7 +280,7 @@ invariant solvency_total_asset_geq_total_supply()
     f.contract == currentContract 
     // &&   f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
     && f.selector != sig:redeem(uint256,address,address).selector
-    //    && f.selector != sig:redeem(uint256,address,address,bool).selector
+    && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     && !harnessMethodsMinusHarnessClaimMethods(f)
     && !claimFunctions(f)
     && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector }

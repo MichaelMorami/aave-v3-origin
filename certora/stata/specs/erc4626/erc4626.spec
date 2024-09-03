@@ -610,84 +610,84 @@ methods {
             assert !reverted, "Conversion to shares reverted";
         }
 
-/************************
- *      maxWithdraw      *
- *************************/
+    /************************
+    *      maxWithdraw      *
+    *************************/
 
-// maxWithdraw must not revert
-// Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
-// in the functions rayDivRoundUp/Down
-rule maxWithdrawMustntRevert(address user){
-  // This assumption subject to correct configuration of the pool, aToken and statAToken.
-  // The assumption was ran by and approved by BGD
-  require rate() > 0;
-  maxWithdraw@withrevert(user);
-  assert !lastReverted;
-}
+        // maxWithdraw must not revert
+        // Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
+        // in the functions rayDivRoundUp/Down
+        rule maxWithdrawMustntRevert(address user){
+        // This assumption subject to correct configuration of the pool, aToken and statAToken.
+        // The assumption was ran by and approved by BGD
+        require rate() > 0;
+        maxWithdraw@withrevert(user);
+        assert !lastReverted;
+        }
 
-/// @title Ensure `maxWithdraw` conforms to conversion functions
-rule maxWithdrawConversionCompliance(address owner) {
-  env e;
-  uint256 shares = balanceOf(owner);
-  uint256 amountConverted = convertToAssets(e, shares);
-  
-  assert maxWithdraw(e, owner) <= amountConverted, "Can withdraw more than converted amount";
-}
+        /// @title Ensure `maxWithdraw` conforms to conversion functions
+        rule maxWithdrawConversionCompliance(address owner) {
+        env e;
+        uint256 shares = balanceOf(owner);
+        uint256 amountConverted = convertToAssets(e, shares);
+        
+        assert maxWithdraw(e, owner) <= amountConverted, "Can withdraw more than converted amount";
+        }
 
-/**********************
- *      maxRedeem      *
- ***********************/
+    /**********************
+    *      maxRedeem      *
+    ***********************/
 
-// maxRedeem must not revert
-// Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
-// in the functions rayDivRoundUp/Down
-rule maxRedeemMustntRevert(address user) {
-  // This assumption subject to correct configuration of the pool, aToken and statAToken.
-  // The assumption was ran by and approved by BGD
-  require rate() > 0;
-  maxRedeem@withrevert(user);
-  assert !lastReverted;
-}
+        // maxRedeem must not revert
+        // Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
+        // in the functions rayDivRoundUp/Down
+        rule maxRedeemMustntRevert(address user) {
+        // This assumption subject to correct configuration of the pool, aToken and statAToken.
+        // The assumption was ran by and approved by BGD
+        require rate() > 0;
+        maxRedeem@withrevert(user);
+        assert !lastReverted;
+        }
 
-/// @title Ensure `maxRedeem` is not higher than balance
-rule maxRedeemCompliance(address owner) {
-  uint256 shares = balanceOf(owner);
-  assert maxRedeem(owner) <= shares, "Can redeem more than available shares)";
-}
+        /// @title Ensure `maxRedeem` is not higher than balance
+        rule maxRedeemCompliance(address owner) {
+        uint256 shares = balanceOf(owner);
+        assert maxRedeem(owner) <= shares, "Can redeem more than available shares)";
+        }
 
-/************************
- *       maxDeposit      *
- *************************/
+    /************************
+    *       maxDeposit      *
+    *************************/
 
-// maxDeposit must not revert
-// Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
-// in the functions rayDivRoundUp/Down
-rule maxDepositMustntRevert(address user) {
-  env e;
-  require e.msg.value ==0;
-  // This assumption subject to correct configuration of the pool, aToken and statAToken.
-  // The assumption was ran by and approved by BGD
-  require rate() > 0;
-  maxDeposit@withrevert(e, user);
-  assert !lastReverted;
-}
+        // maxDeposit must not revert
+        // Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
+        // in the functions rayDivRoundUp/Down
+        rule maxDepositMustntRevert(address user) {
+        env e;
+        require e.msg.value ==0;
+        // This assumption subject to correct configuration of the pool, aToken and statAToken.
+        // The assumption was ran by and approved by BGD
+        require rate() > 0;
+        maxDeposit@withrevert(e, user);
+        assert !lastReverted;
+        }
 
-/************************
- *       maxMint      *
- *************************/
+    /************************
+    *       maxMint      *
+    *************************/
 
-// maxMint must not revert
-// Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
-// in the functions rayDivRoundUp/Down
-rule maxMintMustntRevert(address user) {
-  env e;
-  require e.msg.value ==0;
-  // This assumption subject to correct configuration of the pool, aToken and statAToken.
-  // The assumption was ran by and approved by BGD
-  require rate() > 0;
-  maxMint@withrevert(e,user);
-  assert !lastReverted;
-}
+        // maxMint must not revert
+        // Nissan remark Aug-2025: this rule doesn't hold due to (a theoretical) possible arithmetical overflow
+        // in the functions rayDivRoundUp/Down
+        rule maxMintMustntRevert(address user) {
+        env e;
+        require e.msg.value ==0;
+        // This assumption subject to correct configuration of the pool, aToken and statAToken.
+        // The assumption was ran by and approved by BGD
+        require rate() > 0;
+        maxMint@withrevert(e,user);
+        assert !lastReverted;
+        }
 
     /*************************
     *       totalAssets      *

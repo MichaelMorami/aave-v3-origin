@@ -203,34 +203,34 @@ import "../methods/methods_base.spec";
             assert previewAssets == assets, "previewMint is unequal to mint";
         }
 
-/***************************
- *        maxDeposit        *
- ***************************/
-// The EIP4626 spec requires that the previewDeposit function must not account for maxDeposit limit or the allowance of asset tokens.
-// Since maxDeposit is a constant, it cannot have any impact on the previewDeposit value.
-// STATUS: Verified for all f except metaDeposit which has a reachability issue
-// https://vaas-stg.certora.com/output/11775/044c54bdf1c0414898e88d9b03dda5a5/?anonymousKey=aaa9c0c1c413cd1fd3cbb9fdfdcaa20a098274c5
+    /***************************
+    *        maxDeposit        *
+    ***************************/
+    // The EIP4626 spec requires that the previewDeposit function must not account for maxDeposit limit or the allowance of asset tokens.
+    // Since maxDeposit is a constant, it cannot have any impact on the previewDeposit value.
+    // STATUS: Verified for all f except metaDeposit which has a reachability issue
+    // https://vaas-stg.certora.com/output/11775/044c54bdf1c0414898e88d9b03dda5a5/?anonymousKey=aaa9c0c1c413cd1fd3cbb9fdfdcaa20a098274c5
 
-///@title maxDeposit is constant
-///@notice This rule verifies that maxDeposit returns a constant value and therefore it cannot have any impact on the previewDeposit value.
+    ///@title maxDeposit is constant
+    ///@notice This rule verifies that maxDeposit returns a constant value and therefore it cannot have any impact on the previewDeposit value.
 
-// Remark (by Nissan on Aug-2025): Currently this rule fails for several functions, like mint, deposit, redeem and more:
-// https://prover.certora.com/output/66114/571e3b8d94884f9594d59efacba86999/?anonymousKey=4ffc80fdbcce585966830513ec609dfdcbe37807
-// It looks likr it is supposed to fail since maxDeposit depends on the scaled-total-suuply of the aToken which may be changed
-// by the above functions.
-rule maxDepositConstant(method f)
-  filtered {
-  f ->
-    f.contract == currentContract
-    }
-        {
-          env e;
-          address receiver;
-          uint256 maxDep1 = maxDeposit(e, receiver);
-          calldataarg args;
-          f(e, args);
-          uint256 maxDep2 = maxDeposit(e, receiver);
-          
-          assert maxDep1 == maxDep2,"maxDeposit should not change";
+    // Remark (by Nissan on Aug-2025): Currently this rule fails for several functions, like mint, deposit, redeem and more:
+    // https://prover.certora.com/output/66114/571e3b8d94884f9594d59efacba86999/?anonymousKey=4ffc80fdbcce585966830513ec609dfdcbe37807
+    // It looks likr it is supposed to fail since maxDeposit depends on the scaled-total-suuply of the aToken which may be changed
+    // by the above functions.
+    rule maxDepositConstant(method f)
+    filtered {
+    f ->
+        f.contract == currentContract
         }
+            {
+            env e;
+            address receiver;
+            uint256 maxDep1 = maxDeposit(e, receiver);
+            calldataarg args;
+            f(e, args);
+            uint256 maxDep2 = maxDeposit(e, receiver);
+            
+            assert maxDep1 == maxDep2,"maxDeposit should not change";
+            }
     

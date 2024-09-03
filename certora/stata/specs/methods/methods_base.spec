@@ -28,7 +28,8 @@ methods {
         function rewardTokens() external returns (address[]) envfree;
         function isRegisteredRewardToken(address) external returns (bool) envfree;
 
-        
+        function _.mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) internal => mulDivCVL(x, y, denominator, rounding) expect (uint256);
+
     // static aToken harness
     // ---------------------
         function getStaticATokenUnderlying() external returns (address) envfree;
@@ -167,12 +168,14 @@ methods {
         require _TransferStrategy != user;
     }
 
-
-    function mulDivCVL(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) returns uint256 {
-        if (rounding == Math.Rounding.Floor) {
-            return mulDivDownAbstractPlus(x, y, denominator);
-        } else {
-            return mulDivUpAbstractPlus(x, y, denominator);
-        }
+    /**
+     * @title MulDiv summarization in CVL.
+     * @dev Rounds up or down depends on user specification  
+     */
+function mulDivCVL(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) returns uint256 {
+    if (rounding == Math.Rounding.Floor) {
+        return mulDivDownAbstractPlus(x, y, denominator);
+    } else {
+        return mulDivUpAbstractPlus(x, y, denominator);
     }
-
+}
