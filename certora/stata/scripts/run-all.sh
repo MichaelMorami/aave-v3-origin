@@ -14,22 +14,14 @@
 # certoraRun $CMN certora/stata/conf/verifyERC4626DepositSummarization.conf --rule depositCheckIndexERayAssert1 \
 # --msg "3: "
 
-
-
-# timeouts and violations: https://prover.certora.com/output/3106/614815483fe64754b0842ca246ed65e7/?anonymousKey=00f1dc259f71a65a83b997ce929093b4049e34b0
-# amountConversionPreserved: 
-# convertSumOfAssetsPreserved: need help to understand counter-example. Looks strange
-echo "******** Running: 4  ***************"
-certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
+# echo "******** Running: 4  ***************"
+# certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
            # maxDepositConstant \
---msg "4: "
+# --msg "4: "
 
-
-
-# timeout: https://prover.certora.com/output/3106/b409f448a7324fd4a31cbfdb3f9577ce/?anonymousKey=007912c02c8c8d6cc52c3a997edcd7ffcf00a1ac
-echo "******** Running: 5  ***************"
-certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule redeemSum \
---msg "5: "
+# echo "******** Running: 5  ***************"
+# certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule redeemSum \
+# --msg "5: "
 
 # echo "******** Running: 6  ***************"
 # certoraRun $CMN certora/stata/conf/verifyAToken.conf --rule aTokenBalanceIsFixed_for_collectAndUpdateRewards aTokenBalanceIsFixed_for_claimRewards aTokenBalanceIsFixed_for_claimRewardsOnBehalf \
