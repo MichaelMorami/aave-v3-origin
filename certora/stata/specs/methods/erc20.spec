@@ -9,7 +9,4 @@ methods {
     function _.approve(address,uint256)              external => DISPATCHER(true);
     function _.transfer(address,uint256)            external => DISPATCHER(true);
     // transferFrom(address,address,uint256) returns (bool)    => DISPATCHER(true)
-
-        function RAY() external returns (uint256) envfree;
-
 }

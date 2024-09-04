@@ -469,6 +469,37 @@ methods {
             assert to_mathint(shares) == balBefore - balAfter,"exactly the specified amount of shares must be burnt";
         }
 
+        /***
+        * rule to check the following for the withdraw function:
+        * 1. SHOULD check msg.sender can spend owner funds using allowance.
+        * 2. MUST revert if all of shares cannot be redeemed (due to withdrawal limit being reached, slippage, the owner not having enough shares, etc).
+        */
+        // STATUS: VERIFIED
+        // https://vaas-stg.certora.com/output/11775/ff8f93d3158f40a5bb27ba35b15e771d/?anonymousKey=c0e02f130ff0d31552c6741d3b1751bda5177bfd
+        ///@title allowance and minted share amount check for redeem function
+        ///@notice This rules checks that the redeem function burns shares upto the allowance for the msg.sender and that the shares burned are exactly equal to the specified share amount
+        rule redeemATokensCheck(env e){
+            uint256 shares;
+            address receiver;
+            address owner;
+            uint256 assets;
+            mathint allowed = allowance(e, owner, e.msg.sender);
+            uint256 balBefore = balanceOf(owner);
+
+            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            require index > RAY();
+            require e.msg.sender != currentContract;
+            require receiver != currentContract;
+            
+            assets = redeemATokens(e, shares, receiver, owner);
+            
+            uint256 balAfter = balanceOf(owner);
+
+            assert e.msg.sender != owner => allowed >= (balBefore - balAfter),"msg.sender should have allowance for transferring owner's shares";
+            assert to_mathint(shares) == balBefore - balAfter,"exactly the specified amount of shares must be burnt";
+        }
+
     /*****************************
     *      convertToAssets      *
     *****************************/

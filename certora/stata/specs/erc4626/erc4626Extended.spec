@@ -135,9 +135,25 @@ import "../methods/methods_base.spec";
             assert assetsSum < assets1 + assets2 + 2, "Redeemed sum far larger than parts";
         }
 
+        /// @title Redeeming aTokens sum of assets is nearly equal to sum of redeeming
+        rule redeemATokensSum(uint256 shares1, uint256 shares2) {
+            env e;
+            address owner = e.msg.sender;  // Handy alias
+
+            uint256 assets1 = redeemATokens(e, shares1, owner, owner);
+            uint256 assets2 = redeemATokens(e, shares2, owner, owner);
+            mathint assetsSum = redeemATokens(e, require_uint256(shares1 + shares2), owner, owner);
+
+            assert assetsSum >= assets1 + assets2, "Redeemed sum smaller than parts";
+
+            /* See `accountsJoiningSplittingIsLimited` rule for why the following assertion
+            * is correct.
+            */
+            assert assetsSum < assets1 + assets2 + 2, "Redeemed sum far larger than parts";
+        }
+
         /* The commented out rule below (withdrawSum) timed out after 6994 seconds (see link below).
         * However, we can deduce worse bounds from previous rules, here is the proof.
-        * TODO: should we try for better bounds?
         * Let w = withdraw(assets), p = previewWithdraw(assets), s = convertToShares(assets),
         * then:
         *     p - 1 <= w <= p -- by previewWithdrawNearlyWithdraw

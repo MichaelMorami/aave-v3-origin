@@ -3,7 +3,6 @@ import "../methods/methods_base.spec";
 /////////////////// Methods ////////////////////////
 
 methods {   
-    function _.permit(address,address,uint256,uint256,uint8,bytes32,bytes32) external => NONDET;
     function _.getIncentivesController() external => CONSTANT;
     function _.getRewardsList() external => NONDET;
         //call by RewardsController.IncentivizedERC20.sol and also by StaticATokenLM.sol
