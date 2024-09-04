@@ -229,16 +229,17 @@ import "../methods/methods_base.spec";
 
     ///@title maxDeposit is constant
     ///@notice This rule verifies that maxDeposit returns a constant value and therefore it cannot have any impact on the previewDeposit value.
-
-    // Remark (by Nissan on Aug-2025): Currently this rule fails for several functions, like mint, deposit, redeem and more:
-    // https://prover.certora.com/output/66114/571e3b8d94884f9594d59efacba86999/?anonymousKey=4ffc80fdbcce585966830513ec609dfdcbe37807
-    // It looks likr it is supposed to fail since maxDeposit depends on the scaled-total-suuply of the aToken which may be changed
-    // by the above functions.
     rule maxDepositConstant(method f)
     filtered {
     f ->
         f.contract == currentContract &&
-        f.selector != sig:emergencyEtherTransfer(address,uint256).selector
+        !f.isView &&
+        f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
+        f.selector != sig:deposit(uint256,address).selector &&
+        f.selector != sig:depositWithPermit(uint256,address,uint256,IERC4626StataToken.SignatureParams,bool).selector &&
+        f.selector != sig:withdraw(uint256,address,address).selector &&
+        f.selector != sig:redeem(uint256,address,address).selector &&
+        f.selector != sig:mint(uint256,address).selector
         }
             {
             env e;

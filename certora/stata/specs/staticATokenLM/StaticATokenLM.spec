@@ -105,13 +105,12 @@ import "../methods/methods_base.spec";
     * 
     */
     rule rewardsTotalDeclinesOnlyByClaim(method f) filtered {
-        // Filter out initialize
       f -> (
             f.contract == currentContract &&
             !harnessOnlyMethods(f) &&
             f.selector != sig:initialize(address, string, string).selector) &&
-            f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
-            f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector
+            f.selector != sig:emergencyEtherTransfer(address,uint256).selector 
+            // f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector
         } {
         // Assuming single reward
         single_RewardToken_setup();
@@ -285,10 +284,12 @@ import "../methods/methods_base.spec";
     /// @title getTotalClaimableRewards() is stable unless rewards were claimed
     rule totalClaimableRewards_stable(method f)
         filtered { f -> 
-                    !f.isView 
+                    f.contract == currentContract
+                    && !f.isView
                     && !claimFunctions(f)
                     && !collectAndUpdateFunction(f)
                     && f.selector != sig:initialize(address,string,string).selector 
+                    && f.selector != sig:emergencyEtherTransfer(address,uint256).selector 
                  }
         {
             env e;

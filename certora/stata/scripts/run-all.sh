@@ -14,7 +14,6 @@ echo "******** Running: 3  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626DepositSummarization.conf --rule depositCheckIndexERayAssert1 depositATokensCheckIndexGRayAssert1 depositWithPermitCheckIndexGRayAssert1 depositATokensCheckIndexERayAssert1 depositWithPermitCheckIndexERayAssert1 \
 --msg "3: "
 
-# https://prover.certora.com/output/44289/832cad35373c47e6a839b63bf3cf2e8a/?anonymousKey=521c76392a3aaac3e2e14832bec1b4fe288603e0
 echo "******** Running: 4  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
             maxDepositConstant \
@@ -45,6 +44,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsi
 --msg "10: "
 
 # https://prover.certora.com/output/44289/42fc0dfa73e447b58f0403b79666cde3/?anonymousKey=0514be8889be79131ee27f241bb940b91d1ef46f
+# should filter out singleRewardClaim (we filter out most other claims), however for some reason doubleRewardClaim passes
 echo "******** Running: 11  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable \
 --msg "11: "
@@ -54,6 +54,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_pos
 --msg "12: "
 
 # https://prover.certora.com/output/44289/68d7f37ee18b420e9c5a0f308571d923/?anonymousKey=7b8ef95fcbb877bc755b70900f2318595f3911cc
+# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 13  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply \
 --msg "13: "
@@ -90,10 +91,16 @@ echo "******** Running: 21  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
 --msg "21: "
 
+# https://prover.certora.com/output/44289/1def0879614d4785bdc08abaeb335461/?anonymousKey=701a7bc7af69a04020cca37d89aa442c39691875
+# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 22  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "22: "
 
 echo "******** Running: 23  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
+certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
 --msg "23: "
+
+echo "******** Running: 24  ***************"
+certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
+--msg "24: "
