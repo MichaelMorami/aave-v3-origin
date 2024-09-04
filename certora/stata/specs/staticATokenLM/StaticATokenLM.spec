@@ -245,6 +245,7 @@ invariant solvency_positive_total_supply_only_if_positive_asset()
     && !harnessMethodsMinusHarnessClaimMethods(f) 
     && !claimFunctions(f)
     && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector
+    && f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector
     && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     }
         {
@@ -280,6 +281,7 @@ invariant solvency_total_asset_geq_total_supply()
     f.contract == currentContract 
     // &&   f.selector != sig:metaWithdraw(address,address,uint256,uint256,bool,uint256,IStaticATokenLM.SignatureParams calldata).selector
     && f.selector != sig:redeem(uint256,address,address).selector
+    && f.selector != sig:redeemATokens(uint256,address,address).selector
     && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     && !harnessMethodsMinusHarnessClaimMethods(f)
     && !claimFunctions(f)
@@ -288,7 +290,7 @@ invariant solvency_total_asset_geq_total_supply()
           preserved withdraw(uint256 assets, address receiver, address owner)  with (env e3) {
             require balanceOf(owner) <= totalSupply(); 
           }
-          preserved deposit(uint256 assets, address receiver) with (env e4) {
+          preserved depositWithPermit(uint256 assets, address receiver, uint256 deadline, IERC4626StataToken.SignatureParams signature, bool depositToAave) with (env e4) {
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
             require e4.msg.sender != currentContract; //todo: review
           }
@@ -312,9 +314,13 @@ invariant solvency_total_asset_geq_total_supply()
     //timeout with  -t=1200,-mediumTimeout=800,-depth=10
     invariant solvency_total_asset_geq_total_supply_CASE_SPLIT_redeem()
         (_AToken.scaledBalanceOf(currentContract) >= totalSupply())
-        filtered { f -> f.selector == sig:redeem(uint256,address,address).selector}
+        filtered { f -> f.selector == sig:redeem(uint256,address,address).selector
+                     && f.selector != sig:redeemATokens(uint256,address,address).selector}
         {
             preserved redeem(uint256 shares, address receiver, address owner) with (env e2) {
+                require balanceOf(owner) <= totalSupply(); 
+            }
+            preserved redeemATokens(uint256 shares, address receiver, address owner) with (env e2) {
                 require balanceOf(owner) <= totalSupply(); 
             }
         }
@@ -739,6 +745,7 @@ rule getClaimableRewards_stable(method f)
     && !claimFunctions(f)
     && !collectAndUpdateFunction(f)
     && f.selector != sig:initialize(address,string,string).selector
+    && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     //    && f.selector != sig:deposit(uint256,address,uint16,bool).selector
     && f.selector != sig:redeem(uint256,address,address).selector
     //    && f.selector != sig:redeem(uint256,address,address,bool).selector

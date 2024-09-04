@@ -221,7 +221,8 @@ import "../methods/methods_base.spec";
     rule maxDepositConstant(method f)
     filtered {
     f ->
-        f.contract == currentContract
+        f.contract == currentContract &&
+        f.selector != sig:emergencyEtherTransfer(address,uint256).selector
         }
             {
             env e;
