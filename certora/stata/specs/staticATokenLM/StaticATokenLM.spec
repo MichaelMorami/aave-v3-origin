@@ -248,10 +248,10 @@ invariant solvency_positive_total_supply_only_if_positive_asset()
     && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
     }
         {
-          //          preserved redeem(uint256 shares, address receiver, address owner, bool toUnderlying) with (env e1) {
-          //  requireInvariant solvency_total_asset_geq_total_supply();
-          //  require balanceOf(owner) <= totalSupply(); //todo: replace with requireInvariant
-          // }
+          preserved redeem(uint256 shares, address receiver, address owner) with (env e1) {
+            requireInvariant solvency_total_asset_geq_total_supply();
+            require balanceOf(owner) <= totalSupply(); //todo: replace with requireInvariant
+          }
           preserved redeemATokens(uint256 shares, address receiver, address owner) with (env e2) {
             requireInvariant solvency_total_asset_geq_total_supply();
             require balanceOf(owner) <= totalSupply(); 
@@ -291,6 +291,10 @@ invariant solvency_total_asset_geq_total_supply()
           preserved deposit(uint256 assets, address receiver) with (env e4) {
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
             require e4.msg.sender != currentContract; //todo: review
+          }
+          preserved depositATokens(uint256 assets, address receiver) with (env e5) {
+            require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
+            require e5.msg.sender != currentContract; //todo: review
           }
           /*          preserved deposit(uint256 assets, address receiver,uint16 referralCode, bool fromUnderlying) with (env e5) {
             require balanceOf(receiver) <= totalSupply(); //todo: replace with requireInvariant
