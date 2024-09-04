@@ -222,6 +222,7 @@ import "../methods/methods_base.spec";
         !f.isView &&
         f.selector != sig:redeem(uint256,address,address).selector &&
         f.selector != sig:redeemATokens(uint256,address,address).selector &&
+        f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
         !harnessOnlyMethods(f)}
         {
             preserved with (env e){
@@ -234,8 +235,19 @@ import "../methods/methods_base.spec";
     //pass, times out with rule_sanity basic
     invariant inv_atoken_balanceOf_leq_totalSupply_redeem(address user)
         _AToken.balanceOf(user) <= _AToken.totalSupply()
-    filtered { f -> f.selector == sig:redeem(uint256,address,address).selector
-                 && f.selector == sig:redeemATokens(uint256,address,address).selector}
+    filtered { f -> f.selector == sig:redeem(uint256,address,address).selector }
+        {
+            preserved with (env e){
+                requireInvariant sumAllATokenScaledBalance_eq_totalSupply();
+            }
+        }
+
+    /// @title AToken balancerOf(user) <= AToken totalSupply()
+    /// @dev case split of inv_atoken_balanceOf_leq_totalSupply
+    //pass, times out with rule_sanity basic
+    invariant inv_atoken_balanceOf_leq_totalSupply_redeemAToken(address user)
+        _AToken.balanceOf(user) <= _AToken.totalSupply()
+    filtered { f -> f.selector == sig:redeemATokens(uint256,address,address).selector }
         {
             preserved with (env e){
                 requireInvariant sumAllATokenScaledBalance_eq_totalSupply();

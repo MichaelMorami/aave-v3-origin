@@ -48,7 +48,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotal
 --msg "11: "
 
 echo "******** Running: 12  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim_redeem_methods \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable
 --msg "12: "
 
 # violation: https://prover.certora.com/output/3106/6f7bf5f816ed4b658b1a42fcb3217d0f/?anonymousKey=4fcf56bf0ba2942b99b7285b71a20b35dde2ce4d
@@ -62,57 +62,41 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_tot
 --msg "14: "
 
 echo "******** Running: 15  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply_CASE_SPLIT_redeem \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
 --msg "15: "
 
 echo "******** Running: 16  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable \
 --msg "16: "
 
 echo "******** Running: 17  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable_after_collectAndUpdateRewards \
 --msg "17: "
 
 echo "******** Running: 18  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable_after_collectAndUpdateRewards \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule reward_balance_stable_after_collectAndUpdateRewards \
 --msg "18: "
 
 echo "******** Running: 19  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule reward_balance_stable_after_collectAndUpdateRewards \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
 --msg "19: "
 
 echo "******** Running: 20  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable_CASE_SPLIT \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
 --msg "20: "
 
 echo "******** Running: 21  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
 --msg "21: "
 
 echo "******** Running: 22  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
 --msg "22: "
 
 echo "******** Running: 23  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_redeem \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
 --msg "23: "
 
 echo "******** Running: 24  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable_CASE_SPLIT_deposit \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
 --msg "24: "
-
-echo "******** Running: 25  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
---msg "25: "
-
-echo "******** Running: 26  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
---msg "26: "
-
-echo "******** Running: 27  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
---msg "27: "
-
-echo "******** Running: 28  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
---msg "28: "
