@@ -250,6 +250,7 @@ import "../methods/methods_base.spec";
                     && !f.isView
                     && !claimFunctions(f)
                     && !collectAndUpdateFunction(f)
+                    && !harnessOnlyMethods(f)
                     && f.selector != sig:initialize(address,string,string).selector 
                     && f.selector != sig:emergencyEtherTransfer(address,uint256).selector 
                  }
