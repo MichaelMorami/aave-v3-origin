@@ -12,13 +12,6 @@ import "../methods/methods_base.spec";
         function totalSupply() external returns (uint256) envfree;
     }
 
-////////////////// FUNCTIONS //////////////////////
-
-    /// @title Reward hook
-    /// @notice allows a single reward
-    hook Sload address reward _rewardTokens[INDEX  uint256 i] {
-        require reward == _DummyERC20_rewardToken;
-    } 
 
 ///////////////// Properties ///////////////////////
 
@@ -247,37 +240,6 @@ import "../methods/methods_base.spec";
         mathint totalAssetBefore = totalAssets();
         f(e, args); 
         mathint totalAssetAfter = totalAssets();
-        assert totalAssetAfter == totalAssetBefore;
-    }
-
-    /// @title Receiving ATokens does not affect the amount of rewards fetched by collectAndUpdateRewards()
-    rule totalAssets_stable_after_collectAndUpdateRewards()
-    {
-        env e;
-        address reward;
-        mathint totalAssetBefore = totalAssets();
-        collectAndUpdateRewards(e, reward); 
-        mathint totalAssetAfter = totalAssets();
-        assert totalAssetAfter == totalAssetBefore;
-    }
-
-
-    //pass
-    //https://vaas-stg.certora.com/output/99352/7d2ce2bb69ad4d71b4a179daa08633e4/?anonymousKey=7446e8a015ea9aa79cbc542c10b932e04169a0ab
-    /// @title Receiving ATokens does not affect the amount of rewards fetched by collectAndUpdateRewards()
-    rule reward_balance_stable_after_collectAndUpdateRewards()
-    {
-        uint256 totalAccrued = _RewardsController.getUserAccruedRewards(_AToken, currentContract);
-        require (totalAccrued == 0);
-
-        env e;
-        address reward;
-
-        mathint totalAssetBefore = totalAssets();
-        
-        collectAndUpdateRewards(e, reward); 
-        mathint totalAssetAfter = totalAssets();
-
         assert totalAssetAfter == totalAssetBefore;
     }
 

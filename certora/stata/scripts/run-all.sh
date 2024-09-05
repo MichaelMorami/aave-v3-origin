@@ -45,6 +45,7 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsi
 
 # https://prover.certora.com/output/44289/42fc0dfa73e447b58f0403b79666cde3/?anonymousKey=0514be8889be79131ee27f241bb940b91d1ef46f
 # should filter out singleRewardClaim (we filter out most other claims), however for some reason doubleRewardClaim passes
+# pending answer from BGD regarding emergencyTokenTransfer 
 echo "******** Running: 11  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable \
 --msg "11: "
@@ -68,39 +69,31 @@ certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_
 --msg "15: "
 
 echo "******** Running: 16  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable_after_collectAndUpdateRewards \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
 --msg "16: "
 
 echo "******** Running: 17  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule reward_balance_stable_after_collectAndUpdateRewards \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
 --msg "17: "
 
 echo "******** Running: 18  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
 --msg "18: "
 
 echo "******** Running: 19  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
 --msg "19: "
 
+# https://prover.certora.com/output/44289/1def0879614d4785bdc08abaeb335461/?anonymousKey=701a7bc7af69a04020cca37d89aa442c39691875echo "******** Running: 20  ***************"
+# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 20  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
+certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "20: "
 
 echo "******** Running: 21  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
+certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
 --msg "21: "
 
-# https://prover.certora.com/output/44289/1def0879614d4785bdc08abaeb335461/?anonymousKey=701a7bc7af69a04020cca37d89aa442c39691875
-# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 22  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
---msg "22: "
-
-echo "******** Running: 23  ***************"
-certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient \
---msg "23: "
-
-echo "******** Running: 24  ***************"
 certoraRun $CMN certora/stata/conf/verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient \
---msg "24: "
+--msg "22: "

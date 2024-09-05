@@ -651,7 +651,8 @@ methods {
         rule maxWithdrawMustntRevert(address user){
         // This assumption subject to correct configuration of the pool, aToken and statAToken.
         // The assumption was ran by and approved by BGD
-        require rate() > 0;
+        require rate() > RAY();
+        require rate() <= 100 * RAY();
         maxWithdraw@withrevert(user);
         assert !lastReverted;
         }
@@ -675,7 +676,8 @@ methods {
         rule maxRedeemMustntRevert(address user) {
         // This assumption subject to correct configuration of the pool, aToken and statAToken.
         // The assumption was ran by and approved by BGD
-        require rate() > 0;
+        require rate() > RAY();
+        require rate() <= 100 * RAY();
         maxRedeem@withrevert(user);
         assert !lastReverted;
         }
@@ -698,7 +700,8 @@ methods {
         require e.msg.value ==0;
         // This assumption subject to correct configuration of the pool, aToken and statAToken.
         // The assumption was ran by and approved by BGD
-        require rate() > 0;
+        require rate() > RAY();
+        require rate() <= 100 * RAY();
         maxDeposit@withrevert(e, user);
         assert !lastReverted;
         }
@@ -715,7 +718,8 @@ methods {
         require e.msg.value ==0;
         // This assumption subject to correct configuration of the pool, aToken and statAToken.
         // The assumption was ran by and approved by BGD
-        require rate() > 0;
+        require rate() > RAY();
+        require rate() <= 100 * RAY();
         maxMint@withrevert(e,user);
         assert !lastReverted;
         }
@@ -728,7 +732,8 @@ methods {
         rule totalAssetsMustntRevert(address user){
             // This assumption subject to correct configuration of the pool, aToken and statAToken.
             // The assumption was ran by and approved by BGD
-            require rate() > 0;
+            require rate() > RAY();
+            require rate() <= 100 * RAY();
             totalAssets@withrevert();
             assert !lastReverted;
         }

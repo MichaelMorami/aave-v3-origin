@@ -9,39 +9,37 @@ import {SymbolicLendingPool} from './pool/SymbolicLendingPool.sol';
 
 contract StataTokenV2Harness is StataTokenV2 {
   address internal _reward_A;
-  address internal _reward_B;
 
   constructor(
               IPool pool,
               IRewardsController rewardsController
   ) StataTokenV2(pool, rewardsController) {}
   
-  function rate() external view returns (uint256) {
-    return _rate();
-  }
+    function rate() external view returns (uint256) {
+        return _rate();
+    }
 
-  
     // returns the address of the underlying asset of the static aToken
     function getStaticATokenUnderlying() public view returns (address) {
-      return address(_asset);
+      return asset();
     }
     
     // returns the address of the i-th reward token in the reward tokens list maintained by the static aToken
     function getRewardToken(uint256 i) external view returns (address) {
-        return _rewardTokens[i];
+        return rewardTokens()[i];
     }
     
     // returns the length of the reward tokens list maintained by the static aToken
     function getRewardTokensLength() external view returns (uint256) {
-        return _rewardTokens.length;
+        return rewardTokens().length;
     }
 
     // returns a user's reward index on last interaction for a given reward
-    function getRewardsIndexOnLastInteraction(address user, address reward)
-    external view returns (uint128) {
-        UserRewardsData memory currentUserRewardsData = _userRewardsData[user][reward];
-        return currentUserRewardsData.rewardsIndexOnLastInteraction;
-    }
+    // function getRewardsIndexOnLastInteraction(address user, address reward)
+    // external view returns (uint128) {
+    //     UserRewardsData memory currentUserRewardsData = _userRewardsData[user][reward];
+    //     return currentUserRewardsData.rewardsIndexOnLastInteraction;
+    // }
 
     // claims rewards for a user on the static aToken.
     // the method builds the rewards array with a single reward and calls the internal claim function with it
@@ -87,15 +85,6 @@ contract StataTokenV2Harness is StataTokenV2 {
     // wrapper function for the erc20 _mint function. Used to reduce running times
     function _mintWrapper(address to, uint256 amount) external {
         _mint(to, amount);
-    }
-    
-    function getUserRewardsData(address user, address reward)
-    external view
-    returns (uint128) {
-        UserRewardsData memory currentUserRewardsData = _userRewardsData[user][
-        reward
-        ];
-        return currentUserRewardsData.rewardsIndexOnLastInteraction;
     }
     
 }

@@ -31,7 +31,7 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
         // static aToken harness
         // ---------------------
             function getStaticATokenUnderlying() external returns (address) envfree;
-            function getRewardsIndexOnLastInteraction(address, address) external returns (uint128) envfree;
+            // function getRewardsIndexOnLastInteraction(address, address) external returns (uint128) envfree;
             function getRewardTokensLength() external returns (uint256) envfree;
             function getRewardToken(uint256) external returns (address) envfree;
 
@@ -122,9 +122,26 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
         (f.selector == sig:getStaticATokenUnderlying().selector ||
         f.selector == sig:getRewardTokensLength().selector ||
         f.selector == sig:getRewardToken(uint256).selector ||
-        f.selector == sig:getRewardsIndexOnLastInteraction(address, address).selector ||
-        f.selector == sig:getUserRewardsData(address, address).selector ||
         f.selector == sig:_mintWrapper(address, uint256).selector);
+
+////////////////// Hooks //////////////////////
+
+    /// @title Reward hook
+    /// @notice allows a single reward
+    hook Sload address reward (slot 0x4fad66563f105be0bff96185c9058c4934b504d3ba15ca31e86294f0b01fd200).(offset 32)[INDEX  uint256 i] /*_rewardTokens*/ {
+        require reward == _DummyERC20_rewardToken;
+    }
+
+    /// @title aToken hook
+    hook Sload address aToken (slot 0x55029d3f54709e547ed74b2fc842d93107ab1490ab7555dd9dd0bf6451101900).(offset 0) /*aToken*/ {
+        require aToken == _AToken;
+    }
+
+    /// @title underlying hook
+    hook Sload address underlying (slot 0x0773e532dfede91f04b12a73d3d2acd361424f41f76b4fb79f090161e36b4e00).(offset 0)[INDEX  uint256 i] /*_rewardTokens*/ {
+        require underlying == _DummyERC20_aTokenUnderlying;
+    } 
+
 
 ////////////////// FUNCTIONS //////////////////////
 
