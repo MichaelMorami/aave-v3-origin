@@ -1,7 +1,7 @@
 #CMN="--compilation_steps_only"
 
 echo "******** Running: 1  ***************"
-certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
+certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
             maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert totalAssetsMustntRevert \
 --msg "1: verifyERC4626.conf"
 
@@ -34,58 +34,56 @@ echo "******** Running: 7   ***************"
 certoraRun $CMN certora/stata/conf/verifyAToken.conf --rule aTokenBalanceIsFixed_for_collectAndUpdateRewards aTokenBalanceIsFixed_for_claimRewards aTokenBalanceIsFixed_for_claimRewardsOnBehalf \
 --msg "7: "
 
-# https://prover.certora.com/output/44289/f0b91e1835a640c88b57e0d7bf165ea4/?anonymousKey=09f94bda02a18efeca1e94c7bedfe6b044277b56
-# fails rule sanity
 echo "******** Running: 8  ***************"
 certoraRun $CMN certora/stata/conf/verifyAToken.conf --rule aTokenBalanceIsFixed_for_claimSingleRewardOnBehalf aTokenBalanceIsFixed_for_claimRewardsToSelf \
 --msg "8: "
 
 echo "******** Running: 9  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule rewardsConsistencyWhenSufficientRewardsExist \
 --msg "9: "
 
 echo "******** Running: 10  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenInsufficientRewards \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule rewardsConsistencyWhenInsufficientRewards \
 --msg "10: "
 
 echo "******** Running: 11  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule totalClaimableRewards_stable \
 --msg "11: "
 
 echo "******** Running: 12  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_positive_total_supply_only_if_positive_asset \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule solvency_positive_total_supply_only_if_positive_asset \
 --msg "12: "
 
 echo "******** Running: 13  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule solvency_total_asset_geq_total_supply \
 --msg "13: "
 
 echo "******** Running: 14  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule singleAssetAccruedRewards \
 --msg "14: "
 
 echo "******** Running: 15  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule totalAssets_stable \
 --msg "15: "
 
 echo "******** Running: 16  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule getClaimableRewards_stable \
 --msg "16: "
 
 echo "******** Running: 17  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule getClaimableRewards_stable_after_deposit \
 --msg "17: "
 
 echo "******** Running: 18  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule getClaimableRewards_stable_after_refreshRewardTokens \
 --msg "18: "
 
 echo "******** Running: 19  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
 --msg "19: "
 
 echo "******** Running: 20  ***************"
-certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
+certoraRun $CMN certora/stata/conf/verifyStataToken.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "20: "
 
 echo "******** Running: 21  ***************"

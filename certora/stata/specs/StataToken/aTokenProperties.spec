@@ -131,7 +131,7 @@ import "../methods/methods_base.spec";
 
         uint256 preBalance = _AToken.balanceOf(e.msg.sender);
 
-        claimSingleRewardOnBehalf(e, onBehalfOf, receiver, _DummyERC20_aTokenUnderlying);
+        claimSingleRewardOnBehalf(e, onBehalfOf, receiver, _DummyERC20_rewardToken);
 
         uint256 postBalance = _AToken.balanceOf(e.msg.sender);
         assert preBalance == postBalance, "aToken balance changed by claimSingleRewardOnBehalf";

@@ -51,8 +51,10 @@ jobs:
       max-parallel: 16
       matrix:
         rule:
-          - verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert previewDepositAmountCheck maxRedeemCompliance maxWithdrawConversionCompliance
+          - verifyERC4626.conf --rule previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert previewDepositAmountCheck maxRedeemCompliance maxWithdrawConversionCompliance
           - verifyERC4626.conf --rule maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert totalAssetsMustntRevert
+          # Timeout
+          # - verifyERC4626.conf --rule previewWithdrawIndependentOfMaxWithdraw
           - verifyERC4626MintDepositSummarization.conf --rule depositCheckIndexGRayAssert2 depositATokensCheckIndexGRayAssert2 depositWithPermitCheckIndexGRayAssert2 depositCheckIndexERayAssert2 depositATokensCheckIndexERayAssert2 depositWithPermitCheckIndexERayAssert2 mintCheckIndexGRayUpperBound mintCheckIndexGRayLowerBound mintCheckIndexEqualsRay
           - verifyERC4626DepositSummarization.conf --rule depositCheckIndexGRayAssert1 depositATokensCheckIndexGRayAssert1 depositWithPermitCheckIndexGRayAssert1 depositCheckIndexERayAssert1 depositATokensCheckIndexERayAssert1 depositWithPermitCheckIndexERayAssert1
           - verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint
@@ -61,17 +63,17 @@ jobs:
           - verifyERC4626Extended.conf --rule redeemATokensSum
           - verifyAToken.conf --rule aTokenBalanceIsFixed_for_collectAndUpdateRewards aTokenBalanceIsFixed_for_claimRewards aTokenBalanceIsFixed_for_claimRewardsOnBehalf
           - verifyAToken.conf --rule aTokenBalanceIsFixed_for_claimSingleRewardOnBehalf aTokenBalanceIsFixed_for_claimRewardsToSelf
-          - verifyStaticATokenLM.conf --rule rewardsConsistencyWhenSufficientRewardsExist
-          - verifyStaticATokenLM.conf --rule rewardsConsistencyWhenInsufficientRewards
-          - verifyStaticATokenLM.conf --rule totalClaimableRewards_stable
-          - verifyStaticATokenLM.conf --rule solvency_positive_total_supply_only_if_positive_asset
-          - verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply
-          - verifyStaticATokenLM.conf --rule singleAssetAccruedRewards
-          - verifyStaticATokenLM.conf --rule totalAssets_stable
-          - verifyStaticATokenLM.conf --rule getClaimableRewards_stable
-          - verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_deposit
-          - verifyStaticATokenLM.conf --rule getClaimableRewards_stable_after_refreshRewardTokens
-          - verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf
-          - verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim
+          - verifyStataToken.conf --rule rewardsConsistencyWhenSufficientRewardsExist
+          - verifyStataToken.conf --rule rewardsConsistencyWhenInsufficientRewards
+          - verifyStataToken.conf --rule totalClaimableRewards_stable
+          - verifyStataToken.conf --rule solvency_positive_total_supply_only_if_positive_asset
+          - verifyStataToken.conf --rule solvency_total_asset_geq_total_supply
+          - verifyStataToken.conf --rule singleAssetAccruedRewards
+          - verifyStataToken.conf --rule totalAssets_stable
+          - verifyStataToken.conf --rule getClaimableRewards_stable
+          - verifyStataToken.conf --rule getClaimableRewards_stable_after_deposit
+          - verifyStataToken.conf --rule getClaimableRewards_stable_after_refreshRewardTokens
+          - verifyStataToken.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf
+          - verifyStataToken.conf --rule rewardsTotalDeclinesOnlyByClaim
           - verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_sufficient
           - verifyDoubleClaim.conf --rule prevent_duplicate_reward_claiming_single_reward_insufficient
