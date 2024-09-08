@@ -7,7 +7,7 @@
 # fails rule sanity
 echo "******** Running: 1  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
-            maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert \
+            maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert totalAssetsMustntRevert \
 --msg "1: verifyERC4626.conf"
 
 echo "******** Running: 1.5  ***************"
@@ -75,9 +75,6 @@ echo "******** Running: 14  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule singleAssetAccruedRewards \
 --msg "14: "
 
-# https://prover.certora.com/output/44289/4b8a580965114188b4408f97579dd837/?anonymousKey=a97e9fa9b4960bd92d33e6bed3b2f3b00d1901e5
-# Should be fixed once totalAsset is patched. it did work with a harness that refers to atoken.balOf(stata):
-# https://prover.certora.com/output/44289/7781603b5a7e4316a8ea7ada980a2980/?anonymousKey=05779c8f324a901f4a7373ae85d66d56f6299d59
 echo "******** Running: 15  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalAssets_stable \
 --msg "15: "

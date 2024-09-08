@@ -162,14 +162,15 @@ import "../methods/methods_base.spec";
     //https://vaas-stg.certora.com/output/99352/7252b6b75144419c825fb00f1f11acc8/?anonymousKey=8cb67238d3cb2a14c8fbad5c1c8554b00221de95
     //pass with -t=1400,-mediumTimeout=800,-depth=10
 
-    /// @nitce Total asseta is greater than or equal to total supply.
+    /// @nitce Total assets is greater than or equal to total supply.
     invariant solvency_total_asset_geq_total_supply()
     (_AToken.scaledBalanceOf(currentContract) >= totalSupply())
         filtered { f ->
         f.contract == currentContract 
-        && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
         && !harnessMethodsMinusHarnessClaimMethods(f)
         && !claimFunctions(f)
+        && f.selector != sig:emergencyEtherTransfer(address,uint256).selector
+        && f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector
         && f.selector != sig:claimDoubleRewardOnBehalfSame(address, address, address).selector }
         {
             preserved withdraw(uint256 assets, address receiver, address owner)  with (env e3) {
@@ -243,7 +244,7 @@ import "../methods/methods_base.spec";
         assert totalAssetAfter == totalAssetBefore;
     }
 
-    /// @title getTotalClaimableRewards() is stable unless rewards were claimed
+    /// @title getTotalClaimableRewards() is stable unless rewards were claimed or emergency rescue was applied
     rule totalClaimableRewards_stable(method f)
         filtered { f -> 
                     f.contract == currentContract
@@ -281,7 +282,8 @@ import "../methods/methods_base.spec";
             mathint totalClaimableRewardsBefore = getTotalClaimableRewards(e, reward);
             f(e, args); 
             mathint totalClaimableRewardsAfter = getTotalClaimableRewards(e, reward);
-            assert totalClaimableRewardsAfter == totalClaimableRewardsBefore;
+            assert  totalClaimableRewardsAfter == totalClaimableRewardsBefore ||
+                    f.selector == sig:emergencyTokenTransfer(address,address,uint256).selector;
         }
 
 
