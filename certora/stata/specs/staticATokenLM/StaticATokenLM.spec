@@ -90,8 +90,8 @@ import "../methods/methods_base.spec";
     /**
     * @title Only claiming rewards should reduce contract's total rewards balance
     * Only "claim reward" methods should cause the total rewards balance of
-    * `StaticATokenLM` to decline. Note that `initialize`, `emergencyEtherTransfer`
-    * and `emergencyTokenTransfer` are filtered out. To avoid timeouts the rest of the
+    * `StaticATokenLM` to decline. Note that `initialize` and `emergencyEtherTransfer`
+    * are filtered out. To avoid timeouts the rest of the
     * methods were split between several versions of this rule.
     *
     * @dev Passed with rule-sanity in job-id=`98beb842d5b94278ac4a9222249fb564`
@@ -103,7 +103,6 @@ import "../methods/methods_base.spec";
             !harnessOnlyMethods(f) &&
             f.selector != sig:initialize(address, string, string).selector) &&
             f.selector != sig:emergencyEtherTransfer(address,uint256).selector 
-            // f.selector != sig:emergencyTokenTransfer(address,address,uint256).selector
         } {
         // Assuming single reward
         single_RewardToken_setup();
@@ -124,8 +123,9 @@ import "../methods/methods_base.spec";
             (f.selector == sig:claimRewardsOnBehalf(address, address, address[]).selector) ||
             (f.selector == sig:claimRewards(address, address[]).selector) ||
             (f.selector == sig:claimRewardsToSelf(address[]).selector) ||
-            (f.selector == sig:claimSingleRewardOnBehalf(address,address,address).selector)
-        ), "Total rewards decline not due to claim";
+            (f.selector == sig:claimSingleRewardOnBehalf(address,address,address).selector) || 
+            (f.selector == sig:emergencyTokenTransfer(address,address,uint256).selector)
+        ), "Total rewards decline due to function other than claim or emergency rescue";
     }
 
     //pass -t=1400,-mediumTimeout=800,-depth=10 

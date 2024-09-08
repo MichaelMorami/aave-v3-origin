@@ -1,10 +1,18 @@
 #CMN="--compilation_steps_only"
 
 # https://prover.certora.com/output/44289/2a33f924eef64ab69b25ad0d3576f966/?anonymousKey=6c15f614cb0916bc07bb51a0ee7f4dc0188e7761
+# 1 to
+# 4 mustnt revert rules failing due to overflow
+# https://prover.certora.com/output/44289/04ca0876f3ad48e9b0eadfc96d7e1806/?anonymousKey=7f464d5de41688f5de4ce30ce58c169719f61afc
+# fails rule sanity
 echo "******** Running: 1  ***************"
-certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawIndependentOfMaxWithdraw previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
+certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewMintIndependentOfAllowance previewRedeemIndependentOfBalance  previewMintAmountCheck previewDepositIndependentOfAllowanceApprove previewWithdrawAmountCheck previewWithdrawIndependentOfBalance2 previewWithdrawIndependentOfBalance1 previewRedeemIndependentOfMaxRedeem1 previewRedeemAmountCheck previewRedeemIndependentOfMaxRedeem2 amountConversionRoundedDown withdrawCheck redeemCheck redeemATokensCheck convertToAssetsCheck convertToSharesCheck toAssetsDoesNotRevert sharesConversionRoundedDown toSharesDoesNotRevert  previewDepositAmountCheck maxRedeemCompliance  maxWithdrawConversionCompliance \
             maxMintMustntRevert maxDepositMustntRevert maxRedeemMustntRevert maxWithdrawMustntRevert \
 --msg "1: verifyERC4626.conf"
+
+echo "******** Running: 1.5  ***************"
+certoraRun $CMN certora/stata/conf/verifyERC4626.conf --rule previewWithdrawIndependentOfMaxWithdraw \
+--msg "1.5: verifyERC4626.conf"
 
 echo "******** Running: 2  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626MintDepositSummarization.conf --rule depositCheckIndexGRayAssert2 depositATokensCheckIndexGRayAssert2 depositWithPermitCheckIndexGRayAssert2 depositCheckIndexERayAssert2 depositATokensCheckIndexERayAssert2 depositWithPermitCheckIndexERayAssert2 mintCheckIndexGRayUpperBound mintCheckIndexGRayLowerBound mintCheckIndexEqualsRay \
@@ -14,6 +22,8 @@ echo "******** Running: 3  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626DepositSummarization.conf --rule depositCheckIndexERayAssert1 depositATokensCheckIndexGRayAssert1 depositWithPermitCheckIndexGRayAssert1 depositATokensCheckIndexERayAssert1 depositWithPermitCheckIndexERayAssert1 \
 --msg "3: "
 
+# https://prover.certora.com/output/44289/105a94ff745c4b8289259fff28bf0540/?anonymousKey=a7710039aa8dcb3b3cb963bcaf6b03e51e0e8c26
+# fails rule sanity
 echo "******** Running: 4  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
             maxDepositConstant \
@@ -31,6 +41,8 @@ echo "******** Running: 7   ***************"
 certoraRun $CMN certora/stata/conf/verifyAToken.conf --rule aTokenBalanceIsFixed_for_collectAndUpdateRewards aTokenBalanceIsFixed_for_claimRewards aTokenBalanceIsFixed_for_claimRewardsOnBehalf \
 --msg "7: "
 
+# https://prover.certora.com/output/44289/f0b91e1835a640c88b57e0d7bf165ea4/?anonymousKey=09f94bda02a18efeca1e94c7bedfe6b044277b56
+# fails rule sanity
 echo "******** Running: 8  ***************"
 certoraRun $CMN certora/stata/conf/verifyAToken.conf --rule aTokenBalanceIsFixed_for_claimSingleRewardOnBehalf aTokenBalanceIsFixed_for_claimRewardsToSelf \
 --msg "8: "
@@ -86,8 +98,6 @@ echo "******** Running: 19  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule getClaimableRewardsBefore_leq_claimed_claimRewardsOnBehalf \
 --msg "19: "
 
-# https://prover.certora.com/output/44289/45773cd292734e4398fb701c49a97796/?anonymousKey=1dbc68381f0bbd88a7a71df92e5214d82223638b
-# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 20  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsTotalDeclinesOnlyByClaim \
 --msg "20: "
