@@ -6,6 +6,9 @@ using ATokenInstance as _AToken;
 /////////////////// Methods ////////////////////////
 
 methods{
+    // static aToken
+    // -------------
+        function asset() external returns (address) envfree;
     // erc20
     // -----
         function _.transferFrom(address,address,uint256) external => NONDET;

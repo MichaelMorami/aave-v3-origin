@@ -40,7 +40,8 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
         // pool
         // ----
             function _SymbolicLendingPool.getReserveNormalizedIncome(address) external returns (uint256) envfree;
-            function _SymbolicLendingPool.getReserveData(address) external returns (DataTypes.ReserveData) => CONSTANT;
+            function _SymbolicLendingPool.getReserveData(address) external returns (DataTypes.ReserveDataLegacy);
+            function _SymbolicLendingPool.getReserveDataExtended(address) external returns (DataTypes.ReserveData);
         
         // rewards controller
         // ------------------

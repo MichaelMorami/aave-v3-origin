@@ -3,7 +3,23 @@ import "../methods/methods_base.spec";
 methods {
     function balanceOf(address) external returns (uint256) envfree;
     function totalSupply() external returns (uint256) envfree;
+    function ReserveConfiguration.getDecimals(DataTypes.ReserveConfigurationMap memory) internal returns (uint256) => limitReserveDecimals();
+    function ReserveConfiguration.getSupplyCap(DataTypes.ReserveConfigurationMap memory) internal returns (uint256) => limitReserveSupplyCap();
 }
+
+///////////////// FUNCTIONS ///////////////////////
+
+    function limitReserveDecimals() returns uint256 {
+        uint256 dec;
+        require dec >= 6 && dec <= 18;
+        return dec;
+    }
+
+    function limitReserveSupplyCap() returns uint256 {
+        uint256 cap;
+        require cap <= 10^36;
+        return cap;
+    }
 
 
 ///////////////// Properties ///////////////////////
@@ -697,6 +713,7 @@ methods {
         require e.msg.value ==0;
         // This assumption subject to correct configuration of the pool, aToken and statAToken.
         // The assumption was ran by and approved by BGD
+        require _AToken.scaledTotalSupply() <= 10^36; // arbitrary extremely large sum of tokens. 10^18 of 18 decimals tokens
         require rate() > RAY();
         require rate() <= 100 * RAY();
         maxDeposit@withrevert(e, user);
@@ -717,6 +734,7 @@ methods {
         // The assumption was ran by and approved by BGD
         require rate() > RAY();
         require rate() <= 100 * RAY();
+        require _AToken.scaledTotalSupply() <= 10^36; // arbitrary extremely large sum of tokens. 10^18 of 18 decimals tokens
         maxMint@withrevert(e,user);
         assert !lastReverted;
         }
