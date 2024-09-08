@@ -6,10 +6,6 @@ using ATokenInstance as _AToken;
 /////////////////// Methods ////////////////////////
 
 methods{
-    // static aToken harness
-    // ---------------------
-        function getStaticATokenUnderlying() external returns (address) envfree;
-
     // erc20
     // -----
         function _.transferFrom(address,address,uint256) external => NONDET;
@@ -41,9 +37,8 @@ methods{
         rule depositCheckIndexGRayAssert2(env e){
             uint256 assets;
             address receiver;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index > RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -60,9 +55,8 @@ methods{
         rule depositATokensCheckIndexGRayAssert2(env e){
             uint256 assets;
             address receiver;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index > RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -81,9 +75,8 @@ methods{
             uint256 deadline;
             IERC4626StataToken.SignatureParams signature;
             bool depositToAave;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index > RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -99,9 +92,8 @@ methods{
         rule depositCheckIndexERayAssert2(env e){
             uint256 assets;
             address receiver;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index == RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -117,9 +109,8 @@ methods{
         rule depositATokensCheckIndexERayAssert2(env e){
             uint256 assets;
             address receiver;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index == RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -138,9 +129,8 @@ methods{
             uint256 deadline;
             IERC4626StataToken.SignatureParams signature;
             bool depositToAave;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();//Without this a different index will be used for conversions in the Atoken contract compared to the one used in StaticAToken
             require e.msg.sender != currentContract;
             require index == RAY();//since the index is initiated as RAY and only increases after that. index < RAY gives strange behaviors causing wildly inaccurate amounts being deposited and minted
 
@@ -167,9 +157,8 @@ methods{
             uint256 shares;
             address receiver;
             uint256 assets;
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
             require e.msg.sender != currentContract;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
 
             uint256 receiverBalBefore = balanceOf(e, receiver);
             require receiverBalBefore + shares <= max_uint256;//avoiding overflow
@@ -190,9 +179,8 @@ methods{
             uint256 shares;
             address receiver;
             uint256 assets;
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
             require e.msg.sender != currentContract;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
 
             uint256 receiverBalBefore = balanceOf(e, receiver);
             require receiverBalBefore + shares <= max_uint256;//avoiding overflow
@@ -213,9 +201,8 @@ methods{
             uint256 shares;
             address receiver;
             uint256 assets;
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
             require e.msg.sender != currentContract;
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
 
             uint256 receiverBalBefore = balanceOf(e, receiver);
             require receiverBalBefore + shares <= max_uint256;//avoiding overflow

@@ -409,8 +409,7 @@ methods {
             uint256 allowed = allowance(e, owner, e.msg.sender);
             uint256 balBefore = _AToken.balanceOf(receiver);
             uint256 shareBalBefore = balanceOf(owner);
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             require e.msg.sender != currentContract;
             require receiver != currentContract;
             require owner != currentContract;
@@ -455,8 +454,7 @@ methods {
             mathint allowed = allowance(e, owner, e.msg.sender);
             uint256 balBefore = balanceOf(owner);
 
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             require index > RAY();
             require e.msg.sender != currentContract;
             require receiver != currentContract;
@@ -486,8 +484,7 @@ methods {
             mathint allowed = allowance(e, owner, e.msg.sender);
             uint256 balBefore = balanceOf(owner);
 
-            require getStaticATokenUnderlying() == _AToken.UNDERLYING_ASSET_ADDRESS();
-            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(getStaticATokenUnderlying());
+            uint256 index = _SymbolicLendingPool.getReserveNormalizedIncome(asset());
             require index > RAY();
             require e.msg.sender != currentContract;
             require receiver != currentContract;

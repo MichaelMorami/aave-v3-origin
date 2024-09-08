@@ -234,6 +234,7 @@ import "../methods/methods_base.spec";
     f ->
         f.contract == currentContract &&
         !f.isView &&
+        !harnessOnlyMethods(f) &&
         f.selector != sig:emergencyEtherTransfer(address,uint256).selector &&
         f.selector != sig:deposit(uint256,address).selector &&
         f.selector != sig:depositWithPermit(uint256,address,uint256,IERC4626StataToken.SignatureParams,bool).selector &&
@@ -251,4 +252,3 @@ import "../methods/methods_base.spec";
             
             assert maxDep1 == maxDep2,"maxDeposit should not change";
             }
-    

@@ -57,8 +57,8 @@ import "../methods/methods_base.spec";
           (f.selector != sig:claimRewardsToSelf(address[]).selector) &&
           (f.selector != sig:claimRewards(address,address[]).selector)
     } {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
 
         env e;
 
@@ -76,9 +76,9 @@ import "../methods/methods_base.spec";
     }
 
     rule aTokenBalanceIsFixed_for_collectAndUpdateRewards() {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
-        require _AToken != _DummyERC20_rewardToken;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken != _DummyERC20_rewardToken;
 
         env e;
 
@@ -97,9 +97,9 @@ import "../methods/methods_base.spec";
 
 
     rule aTokenBalanceIsFixed_for_claimRewardsOnBehalf(address onBehalfOf, address receiver) {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
-        require _AToken != _DummyERC20_rewardToken;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken != _DummyERC20_rewardToken;
 
         // Create a rewards array
         address[] _rewards;
@@ -131,9 +131,9 @@ import "../methods/methods_base.spec";
 
 
     rule aTokenBalanceIsFixed_for_claimSingleRewardOnBehalf(address onBehalfOf, address receiver) {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
-        require _AToken != _DummyERC20_rewardToken;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken != _DummyERC20_rewardToken;
 
         env e;
 
@@ -160,9 +160,9 @@ import "../methods/methods_base.spec";
 
 
     rule aTokenBalanceIsFixed_for_claimRewardsToSelf() {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
-        require _AToken != _DummyERC20_rewardToken;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken != _DummyERC20_rewardToken;
 
         // Create a rewards array
         address[] _rewards;
@@ -186,9 +186,9 @@ import "../methods/methods_base.spec";
 
 
     rule aTokenBalanceIsFixed_for_claimRewards(address receiver) {
-        require _AToken == asset();
-        require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
-        require _AToken != _DummyERC20_rewardToken;
+        // require _AToken == asset();
+        // require _AToken.UNDERLYING_ASSET_ADDRESS() == _DummyERC20_aTokenUnderlying;
+        // require _AToken != _DummyERC20_rewardToken;
 
         // Create a rewards array
         address[] _rewards;

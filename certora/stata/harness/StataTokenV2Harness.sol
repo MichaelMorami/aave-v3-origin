@@ -8,20 +8,15 @@ import {SymbolicLendingPool} from './pool/SymbolicLendingPool.sol';
 
 
 contract StataTokenV2Harness is StataTokenV2 {
-  address internal _reward_A;
+    address internal _reward_A;
 
-  constructor(
-              IPool pool,
-              IRewardsController rewardsController
-  ) StataTokenV2(pool, rewardsController) {}
+    constructor(
+                IPool pool,
+                IRewardsController rewardsController
+    ) StataTokenV2(pool, rewardsController) {}
   
     function rate() external view returns (uint256) {
         return _rate();
-    }
-
-    // returns the address of the underlying asset of the static aToken
-    function getStaticATokenUnderlying() public view returns (address) {
-      return asset();
     }
     
     // returns the address of the i-th reward token in the reward tokens list maintained by the static aToken

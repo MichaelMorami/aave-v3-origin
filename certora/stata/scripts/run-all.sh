@@ -22,8 +22,6 @@ echo "******** Running: 3  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626DepositSummarization.conf --rule depositCheckIndexERayAssert1 depositATokensCheckIndexGRayAssert1 depositWithPermitCheckIndexGRayAssert1 depositATokensCheckIndexERayAssert1 depositWithPermitCheckIndexERayAssert1 \
 --msg "3: "
 
-# https://prover.certora.com/output/44289/105a94ff745c4b8289259fff28bf0540/?anonymousKey=a7710039aa8dcb3b3cb963bcaf6b03e51e0e8c26
-# fails rule sanity
 echo "******** Running: 4  ***************"
 certoraRun $CMN certora/stata/conf/verifyERC4626Extended.conf --rule previewWithdrawRoundingRange previewRedeemRoundingRange amountConversionPreserved sharesConversionPreserved accountsJoiningSplittingIsLimited convertSumOfAssetsPreserved previewDepositSameAsDeposit previewMintSameAsMint \
             maxDepositConstant \
@@ -55,8 +53,6 @@ echo "******** Running: 10  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule rewardsConsistencyWhenInsufficientRewards \
 --msg "10: "
 
-# https://prover.certora.com/output/44289/4da67b12aebb4c39945f19c3c18b0e25/?anonymousKey=6effae278a24458c23cef43299b164d25c77d517
-# pending answer from BGD regarding emergencyTokenTransfer 
 echo "******** Running: 11  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule totalClaimableRewards_stable \
 --msg "11: "
@@ -65,8 +61,6 @@ echo "******** Running: 12  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_positive_total_supply_only_if_positive_asset \
 --msg "12: "
 
-# https://prover.certora.com/output/44289/fbb16bff54cf4bcc8269ceae3703bbaa/?anonymousKey=12a675804ed08564bee5ed4433df78791cd94e78
-# this is due to emergency token transfer. Asked BGD about it
 echo "******** Running: 13  ***************"
 certoraRun $CMN certora/stata/conf/verifyStaticATokenLM.conf --rule solvency_total_asset_geq_total_supply \
 --msg "13: "
