@@ -74,6 +74,7 @@ contract ERC4626StataTokenUpgradeableTest is TestnetProcedures {
     assertEq(erc4626Upgradeable.balanceOf(receiver), shares);
     assertEq(IERC20(aToken).balanceOf(address(erc4626Upgradeable)), env.amount);
     assertEq(IERC20(aToken).balanceOf(user), 0);
+    assertEq(erc4626Upgradeable.totalAssets(), env.amount);
   }
 
   function test_depositATokens_self() external {
