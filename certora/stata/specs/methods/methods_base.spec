@@ -48,7 +48,7 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
             // In RewardsDistributor.sol called by RewardsController.sol
             function _.getAssetIndex(address, address) external=> DISPATCHER(true);
             // In ScaledBalanceTokenBase.sol called by getAssetIndex
-            function _.scaledTotalSupply() external  => DISPATCHER(true);
+            function _.scaledTotalSupply() external => DISPATCHER(true);
             // Called by RewardsController._transferRewards()
             // Defined in TransferStrategyHarness as simple transfer() 
             function _.performTransfer(address,address,uint256) external  =>  DISPATCHER(true);
@@ -78,6 +78,7 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
             function _AToken.totalSupply() external returns (uint256) envfree;
             function _AToken.allowance(address, address) external returns (uint256) envfree;
             function _AToken.UNDERLYING_ASSET_ADDRESS() external returns (address) envfree;
+            function _.RESERVE_TREASURY_ADDRESS() external => CONSTANT;
             function _AToken.scaledBalanceOf(address) external returns (uint256) envfree;
             function _AToken.scaledTotalSupply() external returns (uint256) envfree;
             
@@ -142,7 +143,7 @@ using DummyERC20_rewardToken as _DummyERC20_rewardToken;
 
 
 ////////////////// FUNCTIONS //////////////////////
-
+    
     /**
     * @title Single reward setup
     * Setup the `StaticATokenLM`'s rewards so they contain a single reward token
